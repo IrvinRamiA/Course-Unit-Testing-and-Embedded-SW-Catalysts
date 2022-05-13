@@ -14,4 +14,10 @@ typedef signed long long int64_t;
 uint8_t GPIO_SetPinAsOutput(uint8_t pin);
 uint8_t GPIO_SetPinAsInput(uint8_t pin);
 
+uint8_t GPIO_SetPin(uint8_t pin);
+uint8_t GPIO_ClearPin(uint8_t pin);
+
+uint8_t GPIO_ReadPin();
+uint8_t GPIO_ReadPort();
+
 #endif
