@@ -79,10 +79,10 @@ static void Test_SetPin_Should_ForceToOutput_When_ConfigureAsInput(void)
 	PORTC.PCOR = 0;
 	PORTC.PDDR = 0x50000000;
 
-	TEST_ASSERT_EQUAL(0, GPIO_SetPin(0)); /* Checking return value */
+	TEST_ASSERT_EQUAL(0, GPIO_SetPin(0));				 /* Checking return value */
 	TEST_ASSERT_EQUAL_HEX32(BIT_TO_MASK(0), PORTC.PSOR); /* Checking PSOR change*/
-	TEST_ASSERT_EQUAL_HEX32(0, PORTC.PCOR); /* Unchanged */
-	TEST_ASSERT_EQUAL_HEX32(0x50000001, PORTC.PDDR); /* Pin 0 force to output*/
+	TEST_ASSERT_EQUAL_HEX32(0, PORTC.PCOR);				 /* Unchanged */
+	TEST_ASSERT_EQUAL_HEX32(0x50000001, PORTC.PDDR);	 /* Pin 0 force to output*/
 }
 
 static void Test_SetPin_Should_NotSetOutputs_When_PinIsNotValid(void)
@@ -118,10 +118,10 @@ static void Test_ClearPin_Should_ForceToOutput_When_ConfigureAsInput(void)
 	PORTC.PCOR = 0;
 	PORTC.PDDR = 0x50000000;
 
-	TEST_ASSERT_EQUAL(0, GPIO_ClearPin(0)); /* Checking return value */
+	TEST_ASSERT_EQUAL(0, GPIO_ClearPin(0));				 /* Checking return value */
 	TEST_ASSERT_EQUAL_HEX32(BIT_TO_MASK(0), PORTC.PCOR); /* Checking PCOR change*/
-	TEST_ASSERT_EQUAL_HEX32(0, PORTC.PSOR); /* Unchanged */
-	TEST_ASSERT_EQUAL_HEX32(0x50000001, PORTC.PDDR); /* Pin 0 force to output*/
+	TEST_ASSERT_EQUAL_HEX32(0, PORTC.PSOR);				 /* Unchanged */
+	TEST_ASSERT_EQUAL_HEX32(0x50000001, PORTC.PDDR);	 /* Pin 0 force to output*/
 }
 
 static void Test_ClearPin_Should_NotClearOutputs_When_PinIsNotValid(void)
@@ -134,6 +134,19 @@ static void Test_ClearPin_Should_NotClearOutputs_When_PinIsNotValid(void)
 	TEST_ASSERT_EQUAL_HEX32(0, PORTC.PSOR);
 	TEST_ASSERT_EQUAL_HEX32(0, PORTC.PCOR); /* Checking PCOR change*/
 	TEST_ASSERT_EQUAL_HEX32(0, PORTC.PDDR);
+}
+
+static void Test_Init_Should_ConfigurePinsToDefaults(void)
+{
+	PORTC.PDDR = 0;
+	PORTC.PSOR = 0;
+	PORTC.PCOR = 0;
+	
+	GPIO_Init();
+
+	TEST_ASSERT_EQUAL_HEX32(0X1012A000, PORTC.PDDR);
+	TEST_ASSERT_EQUAL_HEX32(0X10102000, PORTC.PSOR);
+	TEST_ASSERT_EQUAL_HEX32(0X00028000, PORTC.PCOR);
 }
 
 int main(void)
@@ -153,6 +166,8 @@ int main(void)
 	RUN_TEST(Test_ClearPin_Should_SetOutputLow);
 	RUN_TEST(Test_ClearPin_Should_ForceToOutput_When_ConfigureAsInput);
 	RUN_TEST(Test_ClearPin_Should_NotClearOutputs_When_PinIsNotValid);
+
+	RUN_TEST(Test_Init_Should_ConfigurePinsToDefaults);
 
 	return UnityEnd();
 }

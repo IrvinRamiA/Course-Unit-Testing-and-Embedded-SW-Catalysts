@@ -62,3 +62,20 @@ uint8_t GPIO_ClearPin(uint8_t pin)
 
     return 0;
 }
+
+uint8_t GPIO_ReadPin(uint8_t pin)
+{
+    return 0;
+}
+
+uint8_t GPIO_ReadPort()
+{
+    return 0;
+}
+
+void GPIO_Init(void)
+{
+    PORTC.PSOR = 0X10102000;
+    PORTC.PCOR = 0X00028000;
+    PORTC.PDDR = 0X1012A000;
+}

@@ -17,7 +17,9 @@ uint8_t GPIO_SetPinAsInput(uint8_t pin);
 uint8_t GPIO_SetPin(uint8_t pin);
 uint8_t GPIO_ClearPin(uint8_t pin);
 
-uint8_t GPIO_ReadPin();
+uint8_t GPIO_ReadPin(uint8_t pin);
 uint8_t GPIO_ReadPort();
+
+void GPIO_Init(void);
 
 #endif
